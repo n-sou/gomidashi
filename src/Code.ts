@@ -21,23 +21,23 @@ function getTrashKind(day: number): string {
 function createMessage(): string {
   const date: Date = new Date()
   date.setDate(date.getDate() + 1)
-
   const trashKind: string = getTrashKind(date.getDay())
-  if (trashKind === '') return
-
   const message: string = `明日は${trashKind}を捨てる日だよ`
   return message
 }
 
 function notice(): void {
   const APITOKEN: string = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+  const message = createMessage()
+  if (message === '') return
+
   const options: any = {
     method: 'post',
     headers: {
       Authorization: `Bearer ${APITOKEN}`
     },
     payload: {
-      message: createMessage()
+      message: message
     }
   }
   const response: GoogleAppsScript.URL_Fetch.UrlFetchApp = UrlFetchApp.fetch(
